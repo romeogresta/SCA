@@ -19,6 +19,27 @@ namespace SCA.Logical {
 				throw (e);
 			}
 		}
+		public static List<Sensor> RecuperarSensorBarragem(int idBarragem) {
+			try {
+				using (var dbSensor = new SensorContext()) {
+					return dbSensor.Records.Where(p => p.IDBarragem == idBarragem).ToList();
+				}
+			}
+			catch (Exception e) {
+				throw (e);
+			}
+		}
+
+		public static Sensor RecuperarSensor(int idSensor) {
+			try {
+				using (var dbSensor = new SensorContext()) {
+					return dbSensor.Records.Where(p => p.ID == idSensor).FirstOrDefault();
+				}
+			}
+			catch (Exception e) {
+				throw (e);
+			}
+		}
 
 		public static Sensor IncluirSensor(SensorRequest sensorRequest) {
 			try {

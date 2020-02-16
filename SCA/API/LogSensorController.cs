@@ -13,6 +13,11 @@ namespace SCA.API {
 		[HttpGet]
 		public IHttpActionResult RecuperarLogSensor(int idSensor) {
 			return Ok(LogSensorLogical.RecuperarLogSensor(idSensor));
-		}		
+		}
+		[Route("{idBarragem}/{idSensor}/ocorrencia")]
+		[HttpGet]
+		public IHttpActionResult RecuperarOcorrencias(int idBarragem, int idSensor) {
+			return Ok(LogSensorLogical.RecuperarOcorrencias(idBarragem, idSensor));
+		}
 	}
 }

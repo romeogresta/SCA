@@ -23,4 +23,24 @@ namespace SCA.Models {
 			this.DataMedicao = dataMedicao;
 		}		
 	}
+
+	public class Ocorrencia {
+		public string Nome { get; set; }
+		public int Quantidade { get; set; }
+
+		public Ocorrencia (string nome, int quantidade) {
+			this.Nome = nome;
+			this.Quantidade = quantidade;
+		}
+	}
+
+	public class OcorrenciaSensor {
+		public Sensor Sensor { get; set; }
+		public List<Ocorrencia> Ocorrencias { get; set; }
+
+		public OcorrenciaSensor(Sensor sensor, List<Ocorrencia> ocorrencias) {
+			this.Sensor = sensor;
+			this.Ocorrencias = ocorrencias;
+		}
+	}
 }

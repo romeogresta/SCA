@@ -10,7 +10,9 @@
 		</div>
 		<div class="form-group">
 			<label for="idSensor" class="col-form-label">Sensor:</label>
-			<select name="idSensor" id="idSensor"></select>
+			<select name="idSensor" id="idSensor">
+				<option value="">Selecione...</option>
+			</select>
 		</div>
 	</form>
 	<div class="mt-1">
@@ -28,15 +30,26 @@
 
 		var baseURL = @Html.Raw(HttpUtility.JavaScriptStringEncode(System.Configuration.ConfigurationManager.AppSettings["UrlBaseSCA"].ToString(), true));
 
+		var vetorRGB = [];
+		vetorRGB[0] = "0, 255, 0";
+		vetorRGB[1] = "0, 0, 255";
+		vetorRGB[2] = "255, 0, 0";
+		vetorRGB[3] = "255, 255, 0";
+		vetorRGB[4] = "255, 0, 255";
+
 		$(document).ready(function () {
 			recuperarBarragens();
 
 			$("#idBarragem").on("change", function () {
-				recuperarSensores($(this).val());
+				if ($(this).val() != "") {
+					recuperarSensores($(this).val());
+				}
 			});
 
 			$("#idSensor").on("change", function () {
-				recuperarSensor($(this).val());
+				if ($(this).val() != "") {
+					recuperarLogSensor($(this).val());
+				}
 			});
 		});
 
@@ -83,54 +96,42 @@
 			$(sensores).each(function (index, sensor) {
 				$("#idSensor").append($("<option />").val(sensor.ID).text(sensor.Name));
 			});
-		}	
 
-		function recuperarSensor(idSensor) {
-			$.ajax({
-				method: "GET",
-				url: baseURL + "api/sensor/" + idSensor,
-				dataType: "json",
-				async: false
-			})
-			.done(function (data) {
-				recuperarLogSensor(data);
-			});
+			$("#idSensor").append($("<option />").val("0").text("Todos"));
 		}
 
-		function recuperarLogSensor(sensor) {
+		function recuperarLogSensor(idSensor) {
 			$.ajax({
 				method: "GET",
-				url: baseURL + "api/logsensor/" + sensor.ID,
+				url: baseURL + "api/logsensor/" + $("#idBarragem").val() + "/" + idSensor + "/ocorrencia",
 				dataType: "json"
 			})
 			.done(function (data) {
-				processarLogSensor(sensor, data);
+				processarLogSensor(data);
 			});
 		}
 
-		function processarLogSensor(sensor, logSensor) {
-			var numSeguranca = 0;
-			var numAlerta = 0;
-			var numEmergencia = 0;
-
-			$(logSensor).each(function (index, logSensor) {
-				if (logSensor.MedicaoSensor > sensor.MedicaoMaximaAlerta) {
-					numEmergencia++
-				}
-				else {
-					if (logSensor.MedicaoSensor > sensor.MedicaoMaximaSeguranca) {
-						numAlerta++
-					}
-					else {
-						numSeguranca++;
-					}
-				}
-			});
+		function processarLogSensor(ocorrenciasSensor) {
+			var datasets = [];
 
 			var dataSensor = new Array();
-			dataSensor.push(numSeguranca);
-			dataSensor.push(numAlerta);
-			dataSensor.push(numEmergencia);
+
+			$(ocorrenciasSensor).each(function (index, ocorrenciaSensor) {
+				var dataSensor = new Array();
+
+				$(ocorrenciaSensor.Ocorrencias).each(function (index, ocorrencia) {
+					dataSensor.push(ocorrencia.Quantidade);
+				});
+
+				datasets[index] = {
+					label: ocorrenciaSensor.Sensor.Name,
+					data: dataSensor,
+					fill: false,
+					backgroundColor: "rgba(" + vetorRGB[index % vetorRGB.length] + ", 0.5)",
+					borderWidth: 1
+				};
+				
+			});
 
 			if (sensorChart != null) {
 				sensorChart.destroy();
@@ -141,15 +142,7 @@
 				"type": "bar",
 					"data": {
 						"labels": ["Segurança", "Alerta", "Emergência"],
-						"datasets": [
-							{
-								"label": sensor.Name,
-								"data": dataSensor,
-								"fill": false,
-								"backgroundColor": ["rgba(0, 255, 0, 0.5)", "rgba(0, 255, 0, 0.5)", "rgba(0, 255, 0, 0.5)"],
-								"borderWidth": 1
-							}
-						]
+						"datasets": datasets
 					},
 					"options": {
 						"scales": {
