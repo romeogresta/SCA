@@ -1,0 +1,47 @@
+﻿[
+  {
+    "ID": "1",
+    "IDTipoSensor": "4",
+    "IDBarragem": "1",
+    "Name": "Termal Mariana I",
+    "MedicaoMinima": "20.0",
+    "MedicaoMaximaSeguranca": "35.0",
+    "MedicaoMaximaAlerta": "50.0"
+  },
+  {
+    "ID": "2",
+    "IDTipoSensor": "5",
+    "IDBarragem": "1",
+    "Name": "Meteorológico Mariana I",
+    "MedicaoMinima": "100.0",
+    "MedicaoMaximaSeguranca": "120.0",
+    "MedicaoMaximaAlerta": "150.0"
+  },
+  {
+    "ID": "3",
+    "IDTipoSensor": "4",
+    "IDBarragem": "2",
+    "Name": "Termal Mariana II",
+    "MedicaoMinima": "10.0",
+    "MedicaoMaximaSeguranca": "30.0",
+    "MedicaoMaximaAlerta": "40.0"
+  },
+  {
+    "ID": "4",
+    "IDTipoSensor": "5",
+    "IDBarragem": "2",
+    "Name": "Meteorológico Mariana II",
+    "MedicaoMinima": "100.0",
+    "MedicaoMaximaSeguranca": "120.0",
+    "MedicaoMaximaAlerta": "150.0"
+  },
+  {
+    "ID": "5",
+    "IDTipoSensor": "3",
+    "IDBarragem": "2",
+    "Name": "Resíduos Mariana II",
+    "MedicaoMinima": "100.0",
+    "MedicaoMaximaSeguranca": "180.0",
+    "MedicaoMaximaAlerta": "220.0"
+  }
+]

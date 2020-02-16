@@ -1,0 +1,26 @@
+﻿[
+  {
+    "ID": "1",
+    "IDMetodoAlteamento": "1",
+    "Name": "Barragem Mariana I",
+    "LocalizacaoGeografica": "Mariana / MG",
+    "Volume": "180.0",
+    "Comunidade": "Mariana, Ouro Preto"
+  },
+  {
+    "ID": "2",
+    "IDMetodoAlteamento": "1",
+    "Name": "Barragem Mariana II",
+    "LocalizacaoGeografica": "Mariana / MG",
+    "Volume": "120.0",
+    "Comunidade": "Mariana, Ouro Preto"
+  },
+  {
+    "ID": "3",
+    "IDMetodoAlteamento": "2",
+    "Name": "Barragem Macacos",
+    "LocalizacaoGeografica": "São Sebastião das Águas Claras / MG",
+    "Volume": "350.0",
+    "Comunidade": "Brumadinho, Água Branca, Paraopeba"
+  }
+]

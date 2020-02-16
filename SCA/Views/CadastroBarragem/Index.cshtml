@@ -1,0 +1,224 @@
+﻿<div class="jumbotron">
+	<h1>Cadastro de Barragens</h1>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalBarragem" data-whatever="mdo">Cadastrar Nova Barragem</button>
+
+<div class="row">
+	<table class="table table-striped" id="tabBarragem">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Método de alteamento</th>
+				<th scope="col">Volume (milhões m³)</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Excluir</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
+
+<div class="modal fade" id="modalBarragem" tabindex="-1" role="dialog" aria-labelledby="modalBarragemLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="modalBarragemLabel">Nova Barragem</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="idMetodoAlteamento" class="col-form-label">Método de Alteamento:</label>
+						<select name="idMetodoAlteamento" id="idMetodoAlteamento"></select>
+					</div>
+					<div class="form-group">
+						<label for="txtName" class="col-form-label">Nome:</label>
+						<input type="text" class="form-control" id="txtName">
+					</div>
+					<div class="form-group">
+						<label for="txtLocalizacaoGeografica" class="col-form-label">Localização Geográfica:</label>
+						<input type="text" class="form-control" id="txtLocalizacaoGeografica" style="width: 150px">
+					</div>
+					<div class="form-group">
+						<label for="txtVolume" class="col-form-label">Volume (milhões m³):</label>
+						<input type="text" class="form-control" id="txtVolume" style="width: 80px">
+					</div>
+					<div class="form-group">
+						<label for="txtComunidade" class="col-form-label">Comunidades atingidas:</label>
+						<textarea class="form-control" id="txtComunidade" style="width: 200px;" rows="4"></textarea>
+					</div>
+					<input type="hidden" name="idBarragem" id="idBarragem" value="0">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script language="javascript">
+
+		var baseURL = @Html.Raw(HttpUtility.JavaScriptStringEncode(
+			new Uri(
+					new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+					Url.Content("~/")
+				).ToString(), true));
+
+		$(document).ready(function () {
+			carregarMetodoAlteamento();
+			carregarBarragens();
+
+			$("#txtVolume").mask("##0,00");
+		});
+
+		function carregarMetodoAlteamento() {
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/metodoalteamento",
+				dataType: "json"
+			})
+			.done(function (data) {
+				$("#idMetodoAlteamento").append($("<option />").val("").text("Selecione...").attr("selected", "selected"));
+
+				$(data).each(function (i, metodoAlteamento) {
+					$("#idMetodoAlteamento").append($("<option />").val(metodoAlteamento.ID).text(metodoAlteamento.Name));
+				});
+			});
+		}
+
+		function carregarBarragens() {
+			var templateIconeEditar = "<td><p data-placement=\"top\" data-toggle=\"tooltip\" title=\"Editar\"><button class=\"btn btn-primary btn-xs\" onclick=\"javascript: editarBarragem([ID]); return false;\"><span class=\"glyphicon glyphicon-pencil\"></span></button></p></td>";			
+			var templateIconeExcluir = "<td><p data-placement=\"top\" data-toggle=\"tooltip\" title=\"Excluir\"><button class=\"btn btn-danger btn-xs\" onclick=\"javascript: excluirBarragem([ID]); return false;\"><span class=\"glyphicon glyphicon-trash\"></span></button></p></td>";
+
+			var templateLinhaBarragem = "<tr><th scope=\"row\">[ID]</th><td>[NAME]</td><td>[METODO_ALTEAMENTO]</td><td>[VOLUME]</td>" + templateIconeEditar + templateIconeExcluir + "</tr>";
+
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/barragem",
+				dataType: "json"
+			})
+			.done(function (data) {
+				$("#tabBarragem").find("tr:gt(0)").remove();
+
+				$(data).each(function (i, barragem) {
+					var linhaBarragem = templateLinhaBarragem;
+
+					linhaBarragem = linhaBarragem.replace(/\[ID\]/gi, barragem.ID);
+					linhaBarragem = linhaBarragem.replace(/\[NAME\]/gi, barragem.Name);
+					linhaBarragem = linhaBarragem.replace(/\[METODO_ALTEAMENTO\]/gi, barragem.NameMetodoAlteamento);
+					linhaBarragem = linhaBarragem.replace(/\[VOLUME\]/gi, barragem.Volume.toString().replace(/\./gi, ","));
+
+					$("#tabBarragem").append(linhaBarragem);
+				});
+			});
+		}
+
+		function resetModal() {
+			$("#modalBarragemLabel").html("Nova Barragem");
+			$("#idBarragem").val(0);
+			$("#txtName").val("");
+			$("#txtLocalizacaoGeografica").val("");
+			$("#txtVolume").val("");
+			$("#txtComunidade").val("");
+
+			$("#idMetodoAlteamento").val("");
+		}
+
+		function editarBarragem(id) {
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/barragem/" + id,
+				dataType: "json"
+			})
+			.done(function (data) {
+				$("#modalBarragem").modal("show");
+
+				$("#idBarragem").val(data.ID);
+				$("#txtName").val(data.Name);
+				$("#txtLocalizacaoGeografica").val(data.LocalizacaoGeografica);
+				$("#txtVolume").val(data.Volume);
+				$("#txtComunidade").val(data.Comunidade);
+
+				$("#idMetodoAlteamento").val(data.IdMetodoAlteamento);
+
+				$("#modalBarragemLabel").html("Editar Barragem");
+			});
+		}
+
+		function excluirBarragem(id) {
+			if (confirm("Deseja realmente excluir a barragem?")) {
+				$.ajax({
+					method: "DELETE",
+					url: baseURL + "api/barragem/" + id
+				})
+				.done(function (data) {
+					alert("Barragem excluída com sucesso");
+
+					carregarBarragens();
+				});
+			}
+		}
+
+		$("#btnSalvar").on("click", function () {
+			var idBarragem = $("#idBarragem").val();
+			var idMetodoAlteamento = $("#idMetodoAlteamento").val();
+			var nomeBarragem = $("#txtName").val();			
+			var localizacaoGeografica = $("#txtLocalizacaoGeografica").val();
+			var volume = $("#txtVolume").val();
+			var comunidade = $("#txtComunidade").val();
+
+			volume = volume.replace(/\,/gi, ".");
+
+
+			var dataBarragem = JSON.stringify({ IdMetodoAlteamento: idMetodoAlteamento, Name: nomeBarragem, LocalizacaoGeografica: localizacaoGeografica, Volume: volume, Comunidade: comunidade });
+
+			if (idBarragem == 0) {
+				$.ajax({
+					method: "POST",
+					url: baseURL + "api/barragem",
+					contentType: "application/json",
+					data: dataBarragem
+				})
+				.done(function (msg) {
+					alert("Barragem salva com sucesso");
+
+					carregarBarragens();
+				})
+				.always(function() {
+					$("#modalBarragem").modal("hide");
+				});
+			}
+			else {
+				$.ajax({
+					method: "POST",
+					url: baseURL + "api/barragem/" + idBarragem,
+					contentType: "application/json",
+					data: dataBarragem
+				})
+				.done(function (data) {
+					alert("Barragem alterada com sucesso");
+
+					carregarBarragens();
+				})
+				.always(function() {
+					$("#modalBarragem").modal("hide");
+				});
+			}
+		});	
+
+		$("#modalBarragem").on("show.bs.modal", function (e) {
+			resetModal();
+		});
+
+		$("#modalBarragem").on("hidden.bs.modal", function (e) {
+			resetModal();
+		});		
+	</script>
+}

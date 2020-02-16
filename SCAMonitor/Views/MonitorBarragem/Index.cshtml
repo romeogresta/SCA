@@ -1,0 +1,166 @@
+﻿<div class="jumbotron">
+	<h1>Monitoramento de Barragens</h1>
+</div>
+
+<div class="container">
+	<form>
+		<div class="form-group">
+			<label for="idBarragem" class="col-form-label">Barragem:</label>
+			<select name="idBarragem" id="idBarragem"></select>
+		</div>
+		<div class="form-group">
+			<label for="idSensor" class="col-form-label">Sensor:</label>
+			<select name="idSensor" id="idSensor"></select>
+		</div>
+	</form>
+	<div class="mt-1">
+		<div style="width: 600px; height: 600px;">
+			<canvas id="chartSensor"></canvas>
+		</div>
+	</div>
+</div>
+
+
+
+@section Scripts {
+	<script language="javascript">		
+		var sensorChart = null;
+
+		var baseURL = @Html.Raw(HttpUtility.JavaScriptStringEncode(System.Configuration.ConfigurationManager.AppSettings["UrlBaseSCA"].ToString(), true));
+
+		$(document).ready(function () {
+			recuperarBarragens();
+
+			$("#idBarragem").on("change", function () {
+				recuperarSensores($(this).val());
+			});
+
+			$("#idSensor").on("change", function () {
+				recuperarSensor($(this).val());
+			});
+		});
+
+		function recuperarBarragens() {
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/barragem",
+				dataType: "json",
+				async: false
+			})
+			.done(function (data) {
+				carregarBarragens(data);
+			});
+		}
+
+		function carregarBarragens(barragens) {
+			$("#idBarragem").append($("<option />").val("").text("Selecione...").attr("selected", "selected"));
+
+			$(barragens).each(function (index, barragem) {
+				$("#idBarragem").append($("<option />").val(barragem.ID).text(barragem.Name));
+			});
+		}		
+
+		function recuperarSensores(idBarragem) {
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/sensor/barragem/" + idBarragem,
+				dataType: "json"
+			})
+			.done(function (data) {
+				carregarSensores(data);
+			});
+		}
+
+		function carregarSensores(sensores) {
+			$("#idSensor").find("option").remove();
+
+			if (sensorChart != null) {
+				sensorChart.destroy();
+			}
+
+			$("#idSensor").append($("<option />").val("").text("Selecione...").attr("selected", "selected"));
+
+			$(sensores).each(function (index, sensor) {
+				$("#idSensor").append($("<option />").val(sensor.ID).text(sensor.Name));
+			});
+		}	
+
+		function recuperarSensor(idSensor) {
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/sensor/" + idSensor,
+				dataType: "json",
+				async: false
+			})
+			.done(function (data) {
+				recuperarLogSensor(data);
+			});
+		}
+
+		function recuperarLogSensor(sensor) {
+			$.ajax({
+				method: "GET",
+				url: baseURL + "api/logsensor/" + sensor.ID,
+				dataType: "json"
+			})
+			.done(function (data) {
+				processarLogSensor(sensor, data);
+			});
+		}
+
+		function processarLogSensor(sensor, logSensor) {
+			var numSeguranca = 0;
+			var numAlerta = 0;
+			var numEmergencia = 0;
+
+			$(logSensor).each(function (index, logSensor) {
+				if (logSensor.MedicaoSensor > sensor.MedicaoMaximaAlerta) {
+					numEmergencia++
+				}
+				else {
+					if (logSensor.MedicaoSensor > sensor.MedicaoMaximaSeguranca) {
+						numAlerta++
+					}
+					else {
+						numSeguranca++;
+					}
+				}
+			});
+
+			var dataSensor = new Array();
+			dataSensor.push(numSeguranca);
+			dataSensor.push(numAlerta);
+			dataSensor.push(numEmergencia);
+
+			if (sensorChart != null) {
+				sensorChart.destroy();
+			}
+
+			sensorChart = new Chart(
+				$("#chartSensor"), {
+				"type": "bar",
+					"data": {
+						"labels": ["Segurança", "Alerta", "Emergência"],
+						"datasets": [
+							{
+								"label": sensor.Name,
+								"data": dataSensor,
+								"fill": false,
+								"backgroundColor": ["rgba(0, 255, 0, 0.5)", "rgba(0, 255, 0, 0.5)", "rgba(0, 255, 0, 0.5)"],
+								"borderWidth": 1
+							}
+						]
+					},
+					"options": {
+						"scales": {
+							"yAxes": [{
+								"ticks": { "beginAtZero": true }
+							}]
+						}
+					}
+			});
+		}
+
+
+	</script>
+}
