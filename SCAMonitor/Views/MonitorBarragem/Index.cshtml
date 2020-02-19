@@ -139,15 +139,25 @@
 
 			sensorChart = new Chart(
 				$("#chartSensor"), {
-				"type": "bar",
-					"data": {
-						"labels": ["Segurança", "Alerta", "Emergência"],
-						"datasets": datasets
+				type: "bar",
+					data: {
+						labels: ["Segurança", "Alerta", "Emergência"],
+						datasets: datasets
 					},
-					"options": {
-						"scales": {
-							"yAxes": [{
-								"ticks": { "beginAtZero": true }
+					options: {
+						scales: {
+							xAxes: [{
+								scaleLabel: {
+									display: true,
+									labelString: "Status do sensor"
+								}
+							}],
+							yAxes: [{
+								ticks: { beginAtZero: true },
+								scaleLabel: {
+									display: true,
+									labelString: "Ocorrências"
+								}
 							}]
 						}
 					}
