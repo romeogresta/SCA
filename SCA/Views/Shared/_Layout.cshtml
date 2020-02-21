@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+	var imagePath = "~/Content/Images/";
+
+	var spinerPath = imagePath + "spiner.gif";
+
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -28,6 +34,9 @@
         </div>
     </div>
     <div class="container body-content">
+        <div class="divCarregando">
+            <div class=""><img src=@Url.Content(spinerPath) /></div>
+        </div>
         @RenderBody()
         <hr />
         <footer>
@@ -40,6 +49,7 @@
     @Scripts.Render("~/bundles/jquery.mask")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/Chart.js")
+    @Scripts.Render("~/bundles/site")
     @RenderSection("scripts", required: false)
 </body>
 </html>

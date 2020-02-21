@@ -6,8 +6,10 @@ namespace SCA
 	public class BundleConfig
 	{
 		// Para obter mais informações sobre o agrupamento, visite https://go.microsoft.com/fwlink/?LinkId=301862
-		public static void RegisterBundles(BundleCollection bundles)
-		{
+		public static void RegisterBundles(BundleCollection bundles) {
+			bundles.Add(new ScriptBundle("~/bundles/site").Include(
+						"~/Scripts/site.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
 						"~/Scripts/jquery-{version}.js"));
 

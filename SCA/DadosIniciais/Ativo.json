@@ -22,5 +22,29 @@
     "IDCategoriaAtivo": "2",
     "Name": "Trator Grande B",
     "DataManutencao": "2020-12-01 00:00:00"
+  },
+  {
+    "ID": "5",
+    "IDCategoriaAtivo": "3",
+    "Name": "Dragline I",
+    "DataManutencao": "2020-06-01 00:00:00"
+  },
+  {
+    "ID": "6",
+    "IDCategoriaAtivo": "3",
+    "Name": "Dragline II",
+    "DataManutencao": "2020-07-01 00:00:00"
+  },
+  {
+    "ID": "7",
+    "IDCategoriaAtivo": "3",
+    "Name": "Dragline III",
+    "DataManutencao": "2020-11-01 00:00:00"
+  },
+  {
+    "ID": "8",
+    "IDCategoriaAtivo": "3",
+    "Name": "Dragline IV",
+    "DataManutencao": "2020-12-01 00:00:00"
   }
 ]
