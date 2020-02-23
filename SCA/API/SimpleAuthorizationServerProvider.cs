@@ -13,10 +13,7 @@ namespace SCA.API {
             context.Validated();
         }
 
-        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {
-
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {            
             if (!context.UserName.Equals(ConfigurationManager.AppSettings["OAuth2Username"].ToString()) || !context.Password.Equals(ConfigurationManager.AppSettings["OAuth2Password"].ToString())) {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;

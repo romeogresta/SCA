@@ -7,12 +7,12 @@ using SCA.Logical;
 using System.Configuration;
 using System.Net.Http.Formatting;
 using Newtonsoft.Json.Serialization;
+using System.Web.Http.Cors;
 
 namespace SCA {
 	public static class WebApiConfig {
 		public static void Register(HttpConfiguration config) {
 			// Serviços e configuração da API da Web
-			config.EnableCors();
 
 			// Rotas da API da Web
 			config.MapHttpAttributeRoutes();

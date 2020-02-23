@@ -3,11 +3,7 @@
 
     var spinerPath = imagePath + "spiner.gif";
 
-	var urlToken = Html.Raw(HttpUtility.JavaScriptStringEncode(
-			new Uri(
-					new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
-					Url.Content("~/token")
-				).ToString(), true));
+	var urlToken = Html.Raw(HttpUtility.JavaScriptStringEncode(System.Configuration.ConfigurationManager.AppSettings["UrlBaseSCA"].ToString() + "token", true));
 }
 <!DOCTYPE html>
 <html>

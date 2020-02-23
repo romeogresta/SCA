@@ -8,17 +8,20 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 [assembly: OwinStartup(typeof(SCA.API.Startup))]
 namespace SCA.API {
 	public class Startup {
         public void Configuration(IAppBuilder app) {
-            ConfigureOAuth(app);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            ConfigureOAuth(app);           
 
             HttpConfiguration config = new HttpConfiguration();
+
             WebApiConfig.Register(config);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            app.UseWebApi(config);            
+            
+            app.UseWebApi(config);
 
             CarregarDados();
 		}
@@ -28,7 +31,7 @@ namespace SCA.API {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = new SimpleAuthorizationServerProvider(),
             };
 
             // Token Generation
