@@ -5,6 +5,8 @@ using System.Web.Http;
 using System.Net.Http.Headers;
 using SCA.Logical;
 using System.Configuration;
+using System.Net.Http.Formatting;
+using Newtonsoft.Json.Serialization;
 
 namespace SCA {
 	public static class WebApiConfig {
@@ -23,20 +25,7 @@ namespace SCA {
 
 			config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
 
-			CarregarDados();
-		}
-
-		public static void CarregarDados() {
-			CategoriaAtivoLogical.CarregarCategoriaAtivo();
-			MetodoAlteamentoLogical.CarregarMetodoAlteamento();
-			TipoSensorLogical.CarregarTipoSensor();
-
-			if (bool.Parse(ConfigurationManager.AppSettings["CarregarDadosIniciais"].ToString())) {
-				AtivoLogical.CarregarDadosIniciais();
-				BarragemLogical.CarregarDadosIniciais();
-				SensorLogical.CarregarDadosIniciais();
-				LogSensorLogical.GerarDadosIniciais();
-			}
+			config.Filters.Add(new AuthorizeAttribute());
 		}
 	}
 }

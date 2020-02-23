@@ -1,12 +1,38 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var imagePath = "~/Content/Images/";
+
+    var spinerPath = imagePath + "spiner.gif";
+
+	var urlToken = Html.Raw(HttpUtility.JavaScriptStringEncode(
+			new Uri(
+					new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+					Url.Content("~/token")
+				).ToString(), true));
+}
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/OAuthClient")
+    @Scripts.Render("~/bundles/store.js")
+    @Scripts.Render("~/bundles/jquery.oauth")
+    <script language="javascript">
+		var storage;
+		var urlToken = @urlToken;
+
+		$(document).ready(function () {
+			storage = store;
+
+			var oAuthClient = new OAuthClient(urlToken);
+			oAuthClient._login();
+		});
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -23,11 +49,13 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Monitoramento de Barragens", "Index", "MonitorBarragem", new { area = "" }, null)</li>
                 </ul>
-                </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <div class="divCarregando">
+            <div class=""><img src=@Url.Content(spinerPath) /></div>
+        </div>
         @RenderBody()
         <hr />
         <footer>
@@ -35,11 +63,11 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/json")
     @Scripts.Render("~/bundles/jquery.mask")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/Chart.js")
+    @Scripts.Render("~/bundles/site")
     @RenderSection("scripts", required: false)
 </body>
 </html>

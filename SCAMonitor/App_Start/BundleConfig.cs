@@ -5,6 +5,17 @@ namespace SCAMonitor {
 	public class BundleConfig {
 		// Para obter mais informações sobre o agrupamento, visite https://go.microsoft.com/fwlink/?LinkId=301862
 		public static void RegisterBundles(BundleCollection bundles) {
+			BundleTable.EnableOptimizations = false;
+
+			bundles.Add(new ScriptBundle("~/bundles/site").Include(
+						"~/Scripts/site.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/jquery.oauth").Include(
+						"~/Scripts/jquery.oauth.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/OAuthClient").Include(
+						"~/Scripts/OAuthClient.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
 						"~/Scripts/jquery-{version}.js"));
 
@@ -19,6 +30,9 @@ namespace SCAMonitor {
 
 			bundles.Add(new ScriptBundle("~/bundles/Chart.js").Include(
 						"~/Scripts/Chart.js/Chart.min.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/store.js").Include(
+						"~/Scripts/store.js/store.min.js"));
 
 			// Use a versão em desenvolvimento do Modernizr para desenvolver e aprender. Em seguida, quando estiver
 			// pronto para a produção, utilize a ferramenta de build em https://modernizr.com para escolher somente os testes que precisa.

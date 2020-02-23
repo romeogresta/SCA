@@ -1,18 +1,39 @@
 ﻿@{ 
-	var imagePath = "~/Content/Images/";
+	string imagePath = "~/Content/Images/";
 
-	var spinerPath = imagePath + "spiner.gif";
+	string spinerPath = imagePath + "spiner.gif";
 
+	var urlToken = Html.Raw(HttpUtility.JavaScriptStringEncode(
+			new Uri(
+					new Uri(this.Context.Request.Url.GetLeftPart(UriPartial.Authority)),
+					Url.Content("~/token")
+				).ToString(), true));
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/OAuthClient")
+    @Scripts.Render("~/bundles/store.js")
+    @Scripts.Render("~/bundles/jquery.oauth")
+    <script language="javascript">
+		var storage;
+
+		var urlToken = @urlToken;
+
+		$(document).ready(function () {
+			storage = store;
+
+			var oAuthClient = new OAuthClient(urlToken);
+			oAuthClient._login();			
+		});
+    </script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -30,6 +51,7 @@
                     <li>@Html.ActionLink("Cadastro de Ativos", "Index", "CadastroAtivo", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Cadastro de Barragens", "Index", "CadastroBarragem", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Cadastro de Sensores", "Index", "CadastroSensor", new { area = "" }, null)</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -44,7 +66,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/json")
     @Scripts.Render("~/bundles/jquery.mask")
     @Scripts.Render("~/bundles/bootstrap")

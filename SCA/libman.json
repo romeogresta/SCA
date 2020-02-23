@@ -5,6 +5,10 @@
     {
       "library": "Chart.js@2.9.3",
       "destination": "Scripts/Chart.js/"
+    },
+    {
+      "library": "store.js@1.3.20",
+      "destination": "Scripts/store.js/"
     }
   ]
 }
