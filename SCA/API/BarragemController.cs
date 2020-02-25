@@ -46,7 +46,13 @@ namespace SCA.API {
 					Comunidade = b.Comunidade
 				}).FirstOrDefault();
 
-			return Ok(barragem);			
+
+			if (barragem != null) {
+				return Ok(barragem);
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		[Route("")]

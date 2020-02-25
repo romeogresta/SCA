@@ -24,17 +24,7 @@ namespace SCA.Logical {
 		public static Ativo IncluirAtivo(AtivoRequest ativoRequest) {
 			try {
 				using (var dbAtivo = new AtivoContext()) {
-					int idMaxAtivo = 0;
-
-					if (dbAtivo.Records.Count() > 0) {
-						idMaxAtivo = (
-							from a in dbAtivo.Records
-							select a.ID).Max();
-					}
-
-					idMaxAtivo++;
-
-					Ativo ativo = new Ativo(idMaxAtivo, ativoRequest.IDCategoriaAtivo, ativoRequest.Name, ativoRequest.DataManutencao);
+					Ativo ativo = new Ativo(ativoRequest.IDCategoriaAtivo, ativoRequest.Name, ativoRequest.DataManutencao);
 					dbAtivo.Records.Add(ativo);
 
 					dbAtivo.SaveChanges();

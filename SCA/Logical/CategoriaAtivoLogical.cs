@@ -37,14 +37,11 @@ namespace SCA.Logical {
 
 		public static void CarregarCategoriaAtivo() {
 			using (var dbCategoriaAtivo = new CategoriaAtivoContext()) {
-				if (dbCategoriaAtivo.Records.Count() == 0) {
-					int idCategoria = 1;
+				if (dbCategoriaAtivo.Records.Count() == 0) {					
 
-					foreach (string nomCategoria in categorias) {
-						CategoriaAtivo categoriaAtivo = new CategoriaAtivo(idCategoria, nomCategoria);
+					foreach (string nomCategoria in categorias) {						
+						CategoriaAtivo categoriaAtivo = new CategoriaAtivo(nomCategoria);
 						dbCategoriaAtivo.Records.Add(categoriaAtivo);
-
-						idCategoria++;
 					}
 
 					dbCategoriaAtivo.SaveChanges();

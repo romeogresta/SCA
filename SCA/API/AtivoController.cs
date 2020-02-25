@@ -44,7 +44,12 @@ namespace SCA.API {
 					DataManutencao = a.DataManutencao.ToString("dd/MM/yyyy")
 				}).FirstOrDefault();
 
-			return Ok(ativo);
+			if (ativo != null) {
+				return Ok(ativo);
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		[Route("")]

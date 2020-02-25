@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SCA.Models {
 	public class Barragem {
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int ID { get; set; }
 		public int IDMetodoAlteamento { get; set; }
 		public string Name { get; set; }
@@ -18,8 +20,7 @@ namespace SCA.Models {
 
 		}
 
-		public Barragem(int ID, int idMetodoAlteamento, string name, string localizacaoGeografica, double volume, string comunidade) {
-			this.ID = ID;
+		public Barragem(int idMetodoAlteamento, string name, string localizacaoGeografica, double volume, string comunidade) {
 			this.IDMetodoAlteamento = idMetodoAlteamento;
 			this.Name = name;
 			this.LocalizacaoGeografica = localizacaoGeografica;

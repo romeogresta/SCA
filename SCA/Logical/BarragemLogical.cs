@@ -23,17 +23,8 @@ namespace SCA.Logical {
 		public static Barragem IncluirBarragem(BarragemRequest barragemRequest) {
 			try {
 				using (var dbBarragem = new BarragemContext()) {
-					int iDMaxBarragem = 0;
 
-					if (dbBarragem.Records.Count() > 0) {
-						iDMaxBarragem = (
-							from a in dbBarragem.Records
-							select a.ID).Max();
-					}
-
-					iDMaxBarragem++;
-
-					Barragem barragem = new Barragem(iDMaxBarragem, barragemRequest.IDMetodoAlteamento, barragemRequest.Name, barragemRequest.LocalizacaoGeografica, barragemRequest.Volume, barragemRequest.Comunidade);
+					Barragem barragem = new Barragem(barragemRequest.IDMetodoAlteamento, barragemRequest.Name, barragemRequest.LocalizacaoGeografica, barragemRequest.Volume, barragemRequest.Comunidade);
 					dbBarragem.Records.Add(barragem);
 
 					dbBarragem.SaveChanges();

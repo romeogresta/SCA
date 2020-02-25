@@ -10,17 +10,7 @@ namespace SCA.Logical {
 		public static void IncluirLogSensor(int idSensor, double medicaoSensor, DateTime dataMedicao) {
 			try {
 				using (var dbLogSensor = new LogSensorContext()) {
-					int idMaxLogSensor = 0;
-
-					if (dbLogSensor.Records.Count() > 0) {
-						idMaxLogSensor = (
-							from a in dbLogSensor.Records
-							select a.ID).Max();
-					}
-
-					idMaxLogSensor++;
-
-					LogSensor logSensor = new LogSensor(idMaxLogSensor, idSensor, medicaoSensor, dataMedicao);
+					LogSensor logSensor = new LogSensor(idSensor, medicaoSensor, dataMedicao);
 					dbLogSensor.Records.Add(logSensor);
 
 					dbLogSensor.SaveChanges();

@@ -44,17 +44,8 @@ namespace SCA.Logical {
 		public static Sensor IncluirSensor(SensorRequest sensorRequest) {
 			try {
 				using (var dbSensor = new SensorContext()) {
-					int idMaxSensor = 0;
 
-					if (dbSensor.Records.Count() > 0) {
-						idMaxSensor = (
-							from a in dbSensor.Records
-							select a.ID).Max();
-					}
-
-					idMaxSensor++;
-
-					Sensor sensor = new Sensor(idMaxSensor, sensorRequest.IDTipoSensor, sensorRequest.IDBarragem, sensorRequest.Name, sensorRequest.MedicaoMinima, sensorRequest.MedicaoMaximaSeguranca, sensorRequest.MedicaoMaximaAlerta);
+					Sensor sensor = new Sensor(sensorRequest.IDTipoSensor, sensorRequest.IDBarragem, sensorRequest.Name, sensorRequest.MedicaoMinima, sensorRequest.MedicaoMaximaSeguranca, sensorRequest.MedicaoMaximaAlerta);
 					dbSensor.Records.Add(sensor);
 
 					dbSensor.SaveChanges();

@@ -51,7 +51,12 @@ namespace SCA.API {
 					MedicaoMaximaAlerta = s.MedicaoMaximaAlerta,
 				}).FirstOrDefault();
 
-			return Ok(sensor);
+			if (sensor != null) {
+				return Ok(sensor);
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		[Route("barragem/{idBarragem}")]

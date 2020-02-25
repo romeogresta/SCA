@@ -28,16 +28,12 @@ namespace SCA.Logical {
 		public static void CarregarTipoSensor() {
 			using (var dbTipoSensor = new TipoSensorContext()) {
 				if (dbTipoSensor.Records.Count() == 0) {
-					int idTipoSensor = 1;
-
 					foreach (object tipo in tiposSensores) {
 						string name = tipo.GetType().GetProperty("Name").GetValue(tipo, null).ToString();
 						string unidadeMedida = tipo.GetType().GetProperty("UnidadeMedida").GetValue(tipo, null).ToString();
 
-						TipoSensor tipoSensor = new TipoSensor(idTipoSensor, name, unidadeMedida);
+						TipoSensor tipoSensor = new TipoSensor(name, unidadeMedida);
 						dbTipoSensor.Records.Add(tipoSensor);
-
-						idTipoSensor++;
 					}
 
 					dbTipoSensor.SaveChanges();

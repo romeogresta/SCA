@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SCA.Models {
 	public class LogManutencao {
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int ID { get; set; }
 		public int IDAtivo { get; set; }
 		public DateTime DataLogManutencao { get; set; }
@@ -15,8 +17,7 @@ namespace SCA.Models {
 		public LogManutencao() {
 
 		}
-		public LogManutencao(int ID, int iDAtivo, DateTime dataManutencaoAnterior, DateTime dataNovaManutencao) {
-			this.ID = ID;
+		public LogManutencao(int iDAtivo, DateTime dataManutencaoAnterior, DateTime dataNovaManutencao) {
 			this.IDAtivo = IDAtivo;
 			this.DataLogManutencao = DateTime.Now;
 			this.DataManutencaoAnterior = dataManutencaoAnterior;

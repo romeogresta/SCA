@@ -26,13 +26,10 @@ namespace SCA.Logical {
 		public static void CarregarMetodoAlteamento() {
 			using (var dbMetodoAlteamento = new MetodoAlteamentoContext()) {
 				if (dbMetodoAlteamento.Records.Count() == 0) {
-					int idMetodoAlteamento = 1;
 
 					foreach (string nome in metodosAlteamento) {
-						MetodoAlteamento metodoAlteamento = new MetodoAlteamento(idMetodoAlteamento, nome);
+						MetodoAlteamento metodoAlteamento = new MetodoAlteamento(nome);
 						dbMetodoAlteamento.Records.Add(metodoAlteamento);
-
-						idMetodoAlteamento++;
 					}
 
 					dbMetodoAlteamento.SaveChanges();

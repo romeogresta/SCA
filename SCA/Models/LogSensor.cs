@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SCA.Models {
 	public class LogSensor {
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int ID { get; set; }
 		public int IDSensor { get; set; }
 		public double MedicaoSensor { get; set; }
@@ -16,9 +18,7 @@ namespace SCA.Models {
 
 		}
 
-		public LogSensor(int ID, int idSensor, double medicaoSensor, DateTime dataMedicao) {
-			this.ID = ID;
-			this.IDSensor = idSensor;
+		public LogSensor(int idSensor, double medicaoSensor, DateTime dataMedicao) {
 			this.MedicaoSensor = medicaoSensor;
 			this.DataMedicao = dataMedicao;
 		}		
