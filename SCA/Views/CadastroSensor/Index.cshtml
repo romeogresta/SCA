@@ -44,25 +44,20 @@
 						<input type="text" class="form-control" id="txtName">
 					</div>
 					<div class="form-group">
-						<label class="col-form-label">Parâmetros:</label>
-						<table class="table table-striped" id="tabSensor">
-							<thead>
-								<tr>
-									<th scope="col" style="white-space: nowrap;">Medição Mínima</th>
-									<th scope="col" style="white-space: nowrap;">Segurança - Valor Máximo</th>
-									<th scope="col" style="white-space: nowrap;">Alerta - Valor Máximo</th>
-									<th scope="col" style="white-space: nowrap;">Emergência - Acima de</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td style="text-align: center;"><input type="text" class="form-control" id="txtMedicaoMinima" style="width: 80px; float: left;"><div class="lblUnidadeMedida" style="margin-left: 5px; float: left"></div></td>
-									<td style="text-align: center;"><input type="text" class="form-control" id="txtMedicaoMaximaSeguranca" style="width: 80px; float: left;"><div class="lblUnidadeMedida" style="margin-left: 5px; float: left"></div></td>
-									<td style="text-align: center;"><input type="text" class="form-control" id="txtMedicaoMaximaAlerta" style="width: 80px; float: left;"><div class="lblUnidadeMedida" style="margin-left: 5px; float: left"></div></td>
-									<td style="text-align: center;" id="celMinimoEmergencia"><span class="lblUnidadeMedidaEmergencia" style="margin-left: 5px;"></span></td>
-								</tr>
-							</tbody>
-						</table>
+						<label for="txtMedicaoMinima" class="col-form-label">Medição Mínima</label>
+						<input type="text" class="form-control" id="txtMedicaoMinima" style="width: 80px;"><div class="lblUnidadeMedida" style="margin-left: 5px;"></div>
+					</div>
+					<div class="form-group">
+						<label for="txtMedicaoMaximaSeguranca" class="col-form-label">Segurança - Valor Máximo</label>
+						<input type="text" class="form-control" id="txtMedicaoMaximaSeguranca" style="width: 80px;"><div class="lblUnidadeMedida" style="margin-left: 5px;"></div>
+					</div>
+					<div class="form-group">
+						<label for="txtMedicaoMaximaAlerta" class="col-form-label">Alerta - Valor Máximo</label>
+						<input type="text" class="form-control" id="txtMedicaoMaximaAlerta" style="width: 80px;"><div class="lblUnidadeMedida" style="margin-left: 5px;"></div>
+					</div>
+					<div class="form-group">
+						<label class="col-form-label">Emergência - Acima de</label>
+						<span class="lblUnidadeMedidaEmergencia" style="margin-left: 5px;"></span>
 					</div>
 					<input type="hidden" name="idSensor" id="idSensor" value="0">
 				</form>

@@ -19,6 +19,7 @@ namespace SCA.Models {
 		}
 
 		public LogSensor(int idSensor, double medicaoSensor, DateTime dataMedicao) {
+			this.IDSensor = idSensor;
 			this.MedicaoSensor = medicaoSensor;
 			this.DataMedicao = dataMedicao;
 		}		
