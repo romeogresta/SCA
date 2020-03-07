@@ -33,6 +33,12 @@ namespace SCA
 			bundles.Add(new ScriptBundle("~/bundles/store.js").Include(
 						"~/Scripts/store.js/store.min.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/lib_input_validator").Include(
+						"~/Scripts/lib_input_validator.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/lib_date_functions").Include(
+						"~/Scripts/lib_date_functions.js"));
+
 			// Use a versão em desenvolvimento do Modernizr para desenvolver e aprender com ela. Após isso, quando você estiver
 			// pronto para a produção, utilize a ferramenta de build em https://modernizr.com para escolher somente os testes que precisa.
 			bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

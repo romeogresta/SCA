@@ -366,6 +366,8 @@
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\jquery.oauth.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="Scripts\lib_date_functions.js" />
+    <Content Include="Scripts\lib_input_validator.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\OAuthClient.js" />
     <Content Include="Scripts\site.js" />

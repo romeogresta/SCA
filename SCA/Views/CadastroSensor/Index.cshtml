@@ -225,6 +225,60 @@
 			var medicaoMaximaSeguranca = $("#txtMedicaoMaximaSeguranca").val();
 			var medicaoMaximaAlerta = $("#txtMedicaoMaximaAlerta").val();
 
+			var validacaoOK = true;
+			
+			if (isNull(idTipoSensor)) {
+				$("#idTipoSensor").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#idTipoSensor").parent().removeClass("has-error");
+			}
+			
+			if (isNull(idBarragem)) {
+				$("#idBarragem").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#idBarragem").parent().removeClass("has-error");
+			}
+
+			if (isNull(nomeSensor)) {
+				$("#txtName").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtName").parent().removeClass("has-error");
+			}
+
+			if (isNull(medicaoMinima)) {
+				$("#txtMedicaoMinima").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtMedicaoMinima").parent().removeClass("has-error");
+			}
+
+			if (isNull(medicaoMaximaSeguranca)) {
+				$("#txtMedicaoMaximaSeguranca").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtMedicaoMaximaSeguranca").parent().removeClass("has-error");
+			}
+
+			if (isNull(medicaoMaximaAlerta)) {
+				$("#txtMedicaoMaximaAlerta").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtMedicaoMaximaAlerta").parent().removeClass("has-error");
+			}
+
+			if (!validacaoOK) {
+				return;
+			}
+
 			medicaoMinima = medicaoMinima.replace(/\,/gi, ".");
 			medicaoMaximaSeguranca = medicaoMaximaSeguranca.replace(/\,/gi, ".");
 			medicaoMaximaAlerta = medicaoMaximaAlerta.replace(/\,/gi, ".");

@@ -174,6 +174,52 @@
 			var volume = $("#txtVolume").val();
 			var comunidade = $("#txtComunidade").val();
 
+			var validacaoOK = true;
+			
+			if (isNull(idMetodoAlteamento)) {
+				$("#idMetodoAlteamento").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#idMetodoAlteamento").parent().removeClass("has-error");
+			}
+
+			if (isNull(nomeBarragem)) {
+				$("#txtName").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtName").parent().removeClass("has-error");
+			}
+
+			if (isNull(localizacaoGeografica)) {
+				$("#txtLocalizacaoGeografica").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtLocalizacaoGeografica").parent().removeClass("has-error");
+			}
+
+			if (isNull(volume)) {
+				$("#txtVolume").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtVolume").parent().removeClass("has-error");
+			}
+
+			if (isNull(comunidade)) {
+				$("#txtComunidade").parent().addClass("has-error");
+				validacaoOK = false;
+			}
+			else {
+				$("#txtComunidade").parent().removeClass("has-error");
+			}
+
+			if (!validacaoOK) {
+				return;
+			}
+
 			volume = volume.replace(/\,/gi, ".");
 
 
