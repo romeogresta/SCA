@@ -43,5 +43,23 @@
     "MedicaoMinima": "100.0",
     "MedicaoMaximaSeguranca": "180.0",
     "MedicaoMaximaAlerta": "220.0"
+  },
+  {
+    "ID": "6",
+    "IDTipoSensor": "4",
+    "IDBarragem": "3",
+    "Name": "Termal Macacos I",
+    "MedicaoMinima": "30.0",
+    "MedicaoMaximaSeguranca": "55.0",
+    "MedicaoMaximaAlerta": "70.0"
+  },
+  {
+    "ID": "7",
+    "IDTipoSensor": "5",
+    "IDBarragem": "3",
+    "Name": "Meteorológico Macacos I",
+    "MedicaoMinima": "20.0",
+    "MedicaoMaximaSeguranca": "50.0",
+    "MedicaoMaximaAlerta": "100.0"
   }
 ]

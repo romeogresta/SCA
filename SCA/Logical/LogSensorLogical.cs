@@ -74,7 +74,7 @@ namespace SCA.Logical {
 			}
 		}
 
-		public static void GerarDadosIniciais() {
+		public static void GerarDadosIniciais(int idSensor) {
 			using (var dbSensor = new SensorContext()) {
 				DateTime mesAtual = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 				DateTime fimMesAnterior = mesAtual.AddDays(-1);
@@ -84,7 +84,7 @@ namespace SCA.Logical {
 						for (int k = 0; k < 60; k+=30) {
 							DateTime dataMedicao = new DateTime(fimMesAnterior.Year, fimMesAnterior.Month, i, j, k, 0);
 
-							foreach (Sensor sensor in dbSensor.Records) {
+							foreach (Sensor sensor in dbSensor.Records.Where(p => p.ID == idSensor || idSensor == 0)) {
 								double medicaoSensor = GetRandomNumber(sensor.MedicaoMinima, sensor.MedicaoMaximaAlerta + 10);
 
 								IncluirLogSensor(sensor.ID, medicaoSensor, dataMedicao);

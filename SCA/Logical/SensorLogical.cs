@@ -50,6 +50,8 @@ namespace SCA.Logical {
 
 					dbSensor.SaveChanges();
 
+					LogSensorLogical.GerarDadosIniciais(sensor.ID);
+
 					return sensor;
 				}
 			}

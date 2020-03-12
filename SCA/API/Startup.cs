@@ -51,7 +51,7 @@ namespace SCA.API {
 				AtivoLogical.CarregarDadosIniciais();
 				BarragemLogical.CarregarDadosIniciais();
 				SensorLogical.CarregarDadosIniciais();
-				LogSensorLogical.GerarDadosIniciais();
+				LogSensorLogical.GerarDadosIniciais(0);
 			}
 		}
 	}
